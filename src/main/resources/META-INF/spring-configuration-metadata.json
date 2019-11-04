@@ -1,0 +1,36 @@
+{
+  "properties": [
+    {
+      "name": "telegram.external-url",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "telegram.creator-id",
+      "type": "java.lang.Integer"
+    },
+    {
+      "name": "telegram.proxyHost",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "telegram.proxyPort",
+      "type": "java.lang.Integer"
+    },
+    {
+      "name": "telegram.proxyUser",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "telegram.proxyPassword",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "telegram.botToken",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "telegram.botUsername",
+      "type": "java.lang.String"
+    }
+  ]
+}
