@@ -1,6 +1,6 @@
-package com.kortov.bootygram.config
+package com.kortov.bootigram.config
 
-import com.kortov.bootygram.bots.HelloBot
+import com.kortov.bootigram.bots.HelloBot
 import mu.KLogging
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.context.properties.EnableConfigurationProperties

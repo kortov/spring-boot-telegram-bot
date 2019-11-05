@@ -1,4 +1,4 @@
-package com.kortov.bootygram.config
+package com.kortov.bootigram.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding

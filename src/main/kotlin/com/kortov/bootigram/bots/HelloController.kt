@@ -1,6 +1,6 @@
-package com.kortov.bootygram.bots
+package com.kortov.bootigram.bots
 
-import com.kortov.bootygram.config.TelegramProperties
+import com.kortov.bootigram.config.TelegramProperties
 import mu.KLogging
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

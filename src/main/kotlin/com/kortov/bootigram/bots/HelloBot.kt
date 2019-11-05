@@ -1,6 +1,6 @@
-package com.kortov.bootygram.bots
+package com.kortov.bootigram.bots
 
-import com.kortov.bootygram.config.TelegramProperties
+import com.kortov.bootigram.config.TelegramProperties
 import org.telegram.abilitybots.api.bot.AbilityWebhookBot
 import org.telegram.abilitybots.api.objects.Ability
 import org.telegram.abilitybots.api.objects.Locality.USER
@@ -25,7 +25,7 @@ class HelloBot(botToken: String, botUsername: String, botPath: String, options: 
 //        return null
 //    }
 
-    fun sayHelloJepa(): Ability {
+    fun sayHello(): Ability {
         return Ability
                 .builder()
                 .name("hello")
