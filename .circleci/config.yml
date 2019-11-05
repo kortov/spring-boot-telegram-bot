@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Run tests
           # Use "./gradlew test" instead if tests are not run in parallel
-          command: |
+          command:
 #            cd src/test/java
 #            # Get list of classnames of tests that should run on this node
 #            CLASSNAMES=$(circleci tests glob "**/*.kt" \
