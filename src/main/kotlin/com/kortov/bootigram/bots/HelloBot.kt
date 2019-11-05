@@ -2,6 +2,7 @@ package com.kortov.bootigram.bots
 
 import com.kortov.bootigram.config.TelegramProperties
 import org.telegram.abilitybots.api.bot.AbilityWebhookBot
+import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.objects.Ability
 import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
@@ -12,9 +13,10 @@ open class HelloBot(
         botToken: String,
         botUsername: String,
         botPath: String,
+        dbForBot: DBContext,
         options: DefaultBotOptions,
         private val properties: TelegramProperties)
-    : AbilityWebhookBot(botToken, botUsername, botPath, options) {
+    : AbilityWebhookBot(botToken, botUsername, botPath, dbForBot, options) {
 
     lateinit var responseHandler: ResponseHandler
 

@@ -2,10 +2,13 @@ package com.kortov.bootigram.config
 
 import com.kortov.bootigram.bots.HelloBot
 import mu.KLogging
+import org.mapdb.DBMaker
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.telegram.abilitybots.api.db.DBContext
+import org.telegram.abilitybots.api.db.MapDBContext
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
@@ -15,19 +18,33 @@ import java.net.PasswordAuthentication
 @Configuration
 @ConditionalOnClass(TelegramBotsApi::class)
 @EnableConfigurationProperties(TelegramProperties::class)
-class TelegramBotConfig {
+class TelegramBotConfig(val properties: TelegramProperties) {
 
     @Bean(destroyMethod = "close")
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(properties: TelegramProperties): HelloBot {
+    fun helloBot(): HelloBot {
         val helloBot = HelloBot(properties.botToken,
-                properties.botUsername, TelegramProperties.WEB_HOOK, botOptions(properties), properties)
+                properties.botUsername, TelegramProperties.WEB_HOOK, dbForBot(), botOptions(), properties)
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
     }
 
     @Bean
-    fun botOptions(properties: TelegramProperties): DefaultBotOptions {
+    fun dbForBot(): DBContext {
+        val db = DBMaker
+                .tempFileDB()
+//                .fileDB(properties.botUsername)
+                .fileMmapEnableIfSupported()
+                .closeOnJvmShutdown()
+                .transactionEnable()
+                .fileDeleteAfterClose()
+                .make()
+
+        return MapDBContext(db)
+    }
+
+    @Bean
+    fun botOptions(): DefaultBotOptions {
         val botOptions = DefaultBotOptions()
         Authenticator.setDefault(object : Authenticator() {
             override fun getPasswordAuthentication(): PasswordAuthentication {
