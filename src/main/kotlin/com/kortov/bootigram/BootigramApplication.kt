@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class BootigramApplication
 
 fun main(args: Array<String>) {
-	runApplication<BootigramApplication>(*args)
+    runApplication<BootigramApplication>(*args)
 }
