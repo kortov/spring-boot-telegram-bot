@@ -13,7 +13,7 @@ class WebSecurityConfig {
     @Bean
     fun securitygWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http.authorizeExchange()
-                .pathMatchers("/", TelegramProperties.WEB_HOOK)
+                .pathMatchers("/", TelegramProperties.WEB_HOOK, "/foo")
                 .permitAll()
                 .and()
                 .csrf()

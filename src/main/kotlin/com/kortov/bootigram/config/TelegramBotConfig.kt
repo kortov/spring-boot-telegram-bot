@@ -17,13 +17,13 @@ import java.net.PasswordAuthentication
 @EnableConfigurationProperties(TelegramProperties::class)
 class TelegramBotConfig {
 
-    @Bean
+    @Bean(destroyMethod = "close")
     @Throws(TelegramApiRequestException::class)
     fun helloBot(properties: TelegramProperties): HelloBot {
-        val myAmazingBot = HelloBot(properties.botToken ?: "",
+        val helloBot = HelloBot(properties.botToken,
                 properties.botUsername, TelegramProperties.WEB_HOOK, botOptions(properties), properties)
-        myAmazingBot.setWebhook(properties.externalUrl + myAmazingBot.botPath, null)
-        return myAmazingBot
+        helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
+        return helloBot
     }
 
     @Bean
@@ -41,9 +41,7 @@ class TelegramBotConfig {
         return botOptions
     }
 
-
-    companion object : KLogging() {
-    }
+    companion object : KLogging()
 
 
 }

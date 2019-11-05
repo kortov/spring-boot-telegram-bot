@@ -2,19 +2,24 @@ package com.kortov.bootigram.bots
 
 import com.kortov.bootigram.config.TelegramProperties
 import mu.KLogging
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @RestController("/")
-class HelloController(val myAmazingBot: HelloBot) {
+class HelloController(val helloBot: HelloBot) {
 
     @PostMapping(TelegramProperties.WEB_HOOK)
     fun index(@RequestBody update: Update) {
-        myAmazingBot.onWebhookUpdateReceived(update)
+        helloBot.onWebhookUpdateReceived(update)
     }
 
-    companion object : KLogging() {
+    @GetMapping("/foo")
+    fun foo(): String {
+        return "foo"
     }
+
+    companion object : KLogging()
 }

@@ -6,13 +6,25 @@ import org.telegram.abilitybots.api.objects.Ability
 import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
 import org.telegram.telegrambots.bots.DefaultBotOptions
+import javax.annotation.PostConstruct
 
-class HelloBot(botToken: String, botUsername: String, botPath: String, options: DefaultBotOptions, val properties: TelegramProperties)
+open class HelloBot(
+        botToken: String,
+        botUsername: String,
+        botPath: String,
+        options: DefaultBotOptions,
+        private val properties: TelegramProperties)
     : AbilityWebhookBot(botToken, botUsername, botPath, options) {
 
+    lateinit var responseHandler: ResponseHandler
 
     override fun creatorId(): Int {
-        return properties.creatorId ?: -1
+        return properties.creatorId
+    }
+
+    @PostConstruct
+    fun init() {
+        responseHandler = ResponseHandler(sender)
     }
 
 //    override fun onWebhookUpdateReceived(update: Update): BotApiMethod<*>? {
@@ -33,9 +45,13 @@ class HelloBot(botToken: String, botUsername: String, botPath: String, options: 
                 .input(0)
                 .locality(USER)
                 .privacy(ADMIN)
-                .action { ctx -> silent.send("Hello world!", ctx.chatId()!!) }
-                .post { ctx -> silent.send("Bye world!", ctx.chatId()!!) }
+                .action { ctx -> responseHandler.replyToStart(ctx.chatId()) }
+//                .post { ctx -> silent.send("Bye world!", ctx.chatId()!!) }
                 .build()
+    }
+
+    fun close() {
+        db.close()
     }
 
 }
