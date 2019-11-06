@@ -32,9 +32,6 @@ class HelloControllerTest {
     @Autowired
     lateinit var client: WebTestClient
 
-    @Autowired
-    lateinit var config: TelegramBotConfig
-
     @Test
     fun fooControllerTest() {
         client.get().uri("/foo").exchange()

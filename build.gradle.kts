@@ -5,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
-//    jacoco
+    jacoco
 }
 
 group = "com.kortov"
@@ -58,10 +58,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-//tasks.jacocoTestReport {
-//    reports {
-//        xml.isEnabled = false
-//        csv.isEnabled = false
-//        html.destination = file("${buildDir}/jacocoHtml")
-//    }
-//}
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = false
+        csv.isEnabled = false
+        html.destination = file("${buildDir}/jacocoHtml")
+    }
+}
