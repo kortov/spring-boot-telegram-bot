@@ -12,7 +12,7 @@ jobs:
       - restore_cache:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
-          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
       - run:
           name: Install dependencies
           command: ./gradlew build -x test
@@ -23,7 +23,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle/caches
-          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
       - persist_to_workspace:
           root: .
           paths:
@@ -53,7 +53,7 @@ jobs:
             echo 'export TELEGRAM_PROXYPASSWORD = $PROXY_PASSWORD' >> $BASH_ENV
             echo 'export TELEGRAM_BOTTOKEN = $BOT_TOKEN' >> $BASH_ENV
             echo 'export TELEGRAM_BOTUSERNAME = $BOT_USERNAME' >> $BASH_ENV
-            ./gradlew test $GRADLE_ARGS
+            ./gradlew test $GRADLE_ARGS --info
       - run:
           name: Generate code coverage report
           command:
