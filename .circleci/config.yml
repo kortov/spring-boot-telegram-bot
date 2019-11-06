@@ -66,18 +66,18 @@ jobs:
 #            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
 #            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew test $GRADLE_ARGS
-      - run:
-          name: Generate code coverage report
-          command:
-            ./gradlew jacocoTestReport
-      - store_test_results:
-          path: build/test-results/test
-      - store_artifacts:
-          path: build/test-results/test
-          when: always
-      - store_artifacts:
-          path: build/reports/jacoco/test/html
-          when: always
+#      - run:
+#          name: Generate code coverage report
+#          command:
+#            ./gradlew jacocoTestReport
+#      - store_test_results:
+#          path: build/test-results/test
+#      - store_artifacts:
+#          path: build/test-results/test
+#          when: always
+#      - store_artifacts:
+#          path: build/reports/jacoco/test/html
+#          when: always
       - run:
           name: Assemble JAR
           command: |
