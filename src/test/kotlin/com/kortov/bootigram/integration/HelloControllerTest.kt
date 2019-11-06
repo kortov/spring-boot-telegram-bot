@@ -24,7 +24,6 @@ import org.telegram.telegrambots.meta.api.objects.Update
 @WebFluxTest(HelloController::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WithMockUser
-@ContextConfiguration(classes = [TelegramBotConfig::class])
 class HelloControllerTest {
 
     @MockBean
@@ -38,7 +37,6 @@ class HelloControllerTest {
 
     @Test
     fun fooControllerTest() {
-        println(config.properties.botUsername)
         client.get().uri("/foo").exchange()
                 .expectStatus().isOk
                 .expectBody<String>().isEqualTo("foo")
