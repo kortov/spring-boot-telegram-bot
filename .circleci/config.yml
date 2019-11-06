@@ -37,6 +37,15 @@ jobs:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
+        environment:
+          TELEGRAM_EXTERNALURL: {$CIRCLE_BUILD_URL}
+          TELEGRAM_CREATORID: {$CREATOR_ID}
+          TELEGRAM_PROXYHOST: {$PROXY_HOST}
+          TELEGRAM_PROXYPORT: {$PROXY_PORT}
+          TELEGRAM_PROXYUSER: {$PROXY_USER}
+          TELEGRAM_PROXYPASSWORD: {$PROXY_PASSWORD}
+          TELEGRAM_BOTTOKEN: {$BOT_TOKEN}
+          TELEGRAM_BOTUSERNAME: {$BOT_USERNAME}
     steps:
       - checkout
       - attach_workspace:
@@ -44,16 +53,7 @@ jobs:
       - run:
           name: Run tests in parallel
           # Use "./gradlew test" instead if tests are not run in parallel
-          command: |
-            echo 'export TELEGRAM_EXTERNALURL = $CIRCLE_BUILD_URL' >> $BASH_ENV
-            echo 'export TELEGRAM_CREATORID = $CREATOR_ID' >> $BASH_ENV
-            echo 'export TELEGRAM_PROXYHOST = $PROXY_HOST' >> $BASH_ENV
-            echo 'export TELEGRAM_PROXYPORT = $PROXY_PORT' >> $BASH_ENV
-            echo 'export TELEGRAM_PROXYUSER = $PROXY_USER' >> $BASH_ENV
-            echo 'export TELEGRAM_PROXYPASSWORD = $PROXY_PASSWORD' >> $BASH_ENV
-            echo 'export TELEGRAM_BOTTOKEN = $BOT_TOKEN' >> $BASH_ENV
-            echo 'export TELEGRAM_BOTUSERNAME = $BOT_USERNAME' >> $BASH_ENV
-            ./gradlew test $GRADLE_ARGS --info
+          command: ./gradlew test $GRADLE_ARGS --info
       - run:
           name: Generate code coverage report
           command:
