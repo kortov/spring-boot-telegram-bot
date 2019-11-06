@@ -38,23 +38,34 @@ jobs:
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
 #      - image: circleci/postgres:12-alpine
-        environment:
-          TELEGRAM_EXTERNALURL: $CIRCLE_BUILD_URL
-          TELEGRAM_CREATORID: $CREATOR_ID
-          TELEGRAM_PROXYHOST: $PROXY_HOST
-          TELEGRAM_PROXYPORT: $PROXY_PORT
-          TELEGRAM_PROXYUSER: $PROXY_USER
-          TELEGRAM_PROXYPASSWORD: $PROXY_PASSWORD
-          TELEGRAM_BOTTOKEN: $BOT_TOKEN
-          TELEGRAM_BOTUSERNAME: $BOT_USERNAME
+#        environment:
+#          TELEGRAM_EXTERNALURL: $CIRCLE_BUILD_URL
+#          TELEGRAM_CREATORID: $CREATOR_ID
+#          TELEGRAM_PROXYHOST: $PROXY_HOST
+#          TELEGRAM_PROXYPORT: $PROXY_PORT
+#          TELEGRAM_PROXYUSER: $PROXY_USER
+#          TELEGRAM_PROXYPASSWORD: $PROXY_PASSWORD
+#          TELEGRAM_BOTTOKEN: $BOT_TOKEN
+#          TELEGRAM_BOTUSERNAME: $BOT_USERNAME
     steps:
       - checkout
       - attach_workspace:
           at: .
       - run:
-          name: Run tests
-          # Use "./gradlew test" instead if tests are not run in parallel
-          command:
+      name: "Setup custom environment variables"
+      command: |
+        echo 'export TELEGRAM_EXTERNALURL= $CIRCLE_BUILD_URL' >> $BASH_ENV
+        echo 'export TELEGRAM_CREATORID= $CREATOR_ID' >> $BASH_ENV
+        echo 'export TELEGRAM_PROXYHOST= $PROXY_HOST' >> $BASH_ENV
+        echo 'export TELEGRAM_PROXYPORT= $PROXY_PORT' >> $BASH_ENV
+        echo 'export TELEGRAM_PROXYUSER= $PROXY_USER' >> $BASH_ENV
+        echo 'export TELEGRAM_PROXYPASSWORD= $PROXY_PASSWORD' >> $BASH_ENV
+        echo 'export TELEGRAM_BOTTOKEN= $BOT_TOKEN' >> $BASH_ENV
+        echo 'export TELEGRAM_BOTUSERNAME= $BOT_USERNAME' >> $BASH_ENV
+        - run:
+            name: Run tests
+# Use "./gradlew test" instead if tests are not run in parallel
+            command:
 #            cd src/test/java
 #            # Get list of classnames of tests that should run on this node
 #            CLASSNAMES=$(circleci tests glob "**/*.kt" \
@@ -65,7 +76,7 @@ jobs:
 #            # Format the arguments to "./gradlew test"
 #            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
 #            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
-            ./gradlew test $GRADLE_ARGS  --info
+              ./gradlew test $GRADLE_ARGS  --info
 #      - run:
 #          name: Generate code coverage report
 #          command:
@@ -78,16 +89,16 @@ jobs:
 #      - store_artifacts:
 #          path: build/reports/jacoco/test/html
 #          when: always
-      - run:
-          name: Assemble JAR
-          command: |
-            # Skip this for other nodes
-            if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
-              ./gradlew assemble
-            fi
-      # This will be empty for all nodes except the first one
-      - store_artifacts:
-          path: build/libs
+        - run:
+            name: Assemble JAR
+            command: |
+              # Skip this for other nodes
+              if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
+                ./gradlew assemble
+              fi
+        # This will be empty for all nodes except the first one
+        - store_artifacts:
+            path: build/libs
 
 workflows:
   version: 2
