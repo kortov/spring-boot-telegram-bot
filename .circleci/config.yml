@@ -42,42 +42,40 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-      name: Setup custom environment variables
-      command: |
-        echo 'export TELEGRAM_EXTERNALURL = $CIRCLE_BUILD_URL' >> $BASH_ENV
-        echo 'export TELEGRAM_CREATORID = $CREATOR_ID' >> $BASH_ENV
-        echo 'export TELEGRAM_PROXYHOST = $PROXY_HOST' >> $BASH_ENV
-        echo 'export TELEGRAM_PROXYPORT = $PROXY_PORT' >> $BASH_ENV
-        echo 'export TELEGRAM_PROXYUSER = $PROXY_USER' >> $BASH_ENV
-        echo 'export TELEGRAM_PROXYPASSWORD = $PROXY_PASSWORD' >> $BASH_ENV
-        echo 'export TELEGRAM_BOTTOKEN = $BOT_TOKEN' >> $BASH_ENV
-        echo 'export TELEGRAM_BOTUSERNAME = $BOT_USERNAME' >> $BASH_ENV
-
+          name: Run tests in parallel
+          # Use "./gradlew test" instead if tests are not run in parallel
+          command: |
+            echo 'export TELEGRAM_EXTERNALURL = $CIRCLE_BUILD_URL' >> $BASH_ENV
+            echo 'export TELEGRAM_CREATORID = $CREATOR_ID' >> $BASH_ENV
+            echo 'export TELEGRAM_PROXYHOST = $PROXY_HOST' >> $BASH_ENV
+            echo 'export TELEGRAM_PROXYPORT = $PROXY_PORT' >> $BASH_ENV
+            echo 'export TELEGRAM_PROXYUSER = $PROXY_USER' >> $BASH_ENV
+            echo 'export TELEGRAM_PROXYPASSWORD = $PROXY_PASSWORD' >> $BASH_ENV
+            echo 'export TELEGRAM_BOTTOKEN = $BOT_TOKEN' >> $BASH_ENV
+            echo 'export TELEGRAM_BOTUSERNAME = $BOT_USERNAME' >> $BASH_ENV
+            ./gradlew test $GRADLE_ARGS
       - run:
-      name: Run tests
-      command: ./gradlew test $GRADLE_ARGS  --info
+          name: Generate code coverage report
+          command:
+            ./gradlew jacocoTestReport
+      - store_test_results:
+          path: build/test-results/test
+      - store_artifacts:
+          path: build/test-results/test
+          when: always
+      - store_artifacts:
+          path: build/reports/jacoco/test/html
+          when: always
       - run:
-       name: Generate code coverage report
-       command:
-           ./gradlew jacocoTestReport
-             - store_test_results:
-       path: build/test-results/test
-               - store_artifacts:
-       path: build/test-results/test
-       when: always
-         - store_artifacts:
-       path: build/reports/jacoco/test/html
-       when: always
-       - run:
-         name: Assemble JAR
-         command: |
-           # Skip this for other nodes
-           if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
-           ./gradlew assemble
-           fi
-           # This will be empty for all nodes except the first one
-           - store_artifacts:
-               path: build/libs
+          name: Assemble JAR
+          command: |
+            # Skip this for other nodes
+            if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
+              ./gradlew assemble
+            fi
+      # This will be empty for all nodes except the first one
+      - store_artifacts:
+          path: build/libs
 
 workflows:
   version: 2
