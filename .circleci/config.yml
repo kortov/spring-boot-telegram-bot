@@ -37,7 +37,7 @@ jobs:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
-      - image: circleci/postgres:12-alpine
+#      - image: circleci/postgres:12-alpine
         environment:
           TELEGRAM_EXTERNALURL: $CIRCLE_BUILD_URL
           TELEGRAM_CREATORID: $CREATOR_ID
@@ -65,7 +65,7 @@ jobs:
 #            # Format the arguments to "./gradlew test"
 #            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
 #            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
-            ./gradlew test $GRADLE_ARGS
+            ./gradlew test $GRADLE_ARGS  --stacktrace
 #      - run:
 #          name: Generate code coverage report
 #          command:
