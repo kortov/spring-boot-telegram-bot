@@ -55,7 +55,7 @@ jobs:
       - store_test_results:
           path: build/reports/jacoco/report.xml
       - codecov/upload:
-          file: ${CIRCLE_WORKING_DIRECTORY}/build/reports/jacoco/report.xml
+          file: /build/reports/jacoco/report.xml
       - store_artifacts:
           path: build/reports/jacoco/report.xml
           when: always
