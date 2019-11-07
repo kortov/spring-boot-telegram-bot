@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 jobs:
   build:
     environment:
@@ -59,6 +61,8 @@ jobs:
             ./gradlew jacocoTestReport
       - store_test_results:
           path: build/test-results/test
+      - codecov/upload:
+          file: build/test-results/test
       - store_artifacts:
           path: build/test-results/test
           when: always
