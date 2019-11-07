@@ -31,12 +31,10 @@ jobs:
           paths:
             - build
   test:
-    # Remove if parallelism is not desired
-    parallelism: 2
     environment:
       # Configure the JVM and Gradle to avoid OOM errors
       _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1"
       TELEGRAM_EXTERNALURL: ${CIRCLE_BUILD_URL}
       TELEGRAM_CREATORID: ${CREATOR_ID}
       TELEGRAM_PROXYHOST: ${PROXY_HOST}
@@ -52,7 +50,7 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Run tests in parallel
+          name: Run tests
           # Use "./gradlew test" instead if tests are not run in parallel
           command: ./gradlew test $GRADLE_ARGS jacocoTestReport
 #      - run:
