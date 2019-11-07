@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.5
 jobs:
   build:
     environment:
@@ -29,12 +31,10 @@ jobs:
           paths:
             - build
   test:
-    # Remove if parallelism is not desired
-    parallelism: 2
     environment:
       # Configure the JVM and Gradle to avoid OOM errors
       _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1"
       TELEGRAM_EXTERNALURL: ${CIRCLE_BUILD_URL}
       TELEGRAM_CREATORID: ${CREATOR_ID}
       TELEGRAM_PROXYHOST: ${PROXY_HOST}
@@ -50,20 +50,14 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Run tests in parallel
-          # Use "./gradlew test" instead if tests are not run in parallel
-          command: ./gradlew test $GRADLE_ARGS --info
-      - run:
-          name: Generate code coverage report
-          command:
-            ./gradlew jacocoTestReport
+          name: Run tests
+          command: ./gradlew test $GRADLE_ARGS jacocoTestReport
       - store_test_results:
-          path: build/test-results/test
+          path: build/reports/jacoco/report.xml
+      - codecov/upload:
+          file: build/reports/jacoco/report.xml
       - store_artifacts:
-          path: build/test-results/test
-          when: always
-      - store_artifacts:
-          path: build/reports/jacoco/test/html
+          path: build/reports/jacoco/report.xml
           when: always
       - run:
           name: Assemble JAR
@@ -77,7 +71,7 @@ jobs:
           path: build/libs
 
 workflows:
-  version: 2
+  version: 2.1
   workflow:
     jobs:
       - build

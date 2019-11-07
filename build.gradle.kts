@@ -33,9 +33,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.github.microutils:kotlin-logging:1.5.9")
-    implementation ("org.telegram:telegrambots:4.4.0.1")
-    implementation ("org.telegram:telegrambots-abilities:4.4.0.1")
-    implementation ("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("org.telegram:telegrambots:4.4.0.1")
+    implementation("org.telegram:telegrambots-abilities:4.4.0.1")
+    implementation("org.springframework.boot:spring-boot-configuration-processor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")
@@ -60,8 +60,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.jacocoTestReport {
     reports {
-        xml.isEnabled = false
+        xml.isEnabled = true
+        xml.destination = file("${buildDir}/reports/jacoco/report.xml")
+        html.isEnabled = false
         csv.isEnabled = false
-        html.destination = file("${buildDir}/jacocoHtml")
     }
 }
