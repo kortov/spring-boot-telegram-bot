@@ -25,7 +25,6 @@ class HelloBotTest {
     @RelaxedMockK
     lateinit var responseHandler: ResponseHandler
 
-
     @Autowired
     lateinit var bot: HelloBot
 
