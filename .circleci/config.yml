@@ -50,9 +50,20 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                     chmod +x ./cc-test-reporter
+      - run:
           name: Run tests
           # Use "./gradlew test" instead if tests are not run in parallel
-          command: ./gradlew test $GRADLE_ARGS jacocoTestReport
+          command: |
+          # notify Code Climate of a pending test report using `before-build`
+                      ./cc-test-reporter before-build
+          ./gradlew test $GRADLE_ARGS jacocoTestReport
+          # upload test report to Code Climate using `after-build`
+          ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
 #      - run:
 #          name: Generate code coverage report
 #          command:
@@ -60,9 +71,9 @@ jobs:
       - store_test_results:
           path: build/jacocoHtml
       - codecov/upload:
-          file: ${CIRCLE_WORKING_DIRECTORY}/build/jacocoHtml/*
+          file: ${CIRCLE_WORKING_DIRECTORY}/build/reports/jacoco/report.xml
       - store_artifacts:
-          path: build/jacocoHtml
+          path: build//reports/jacoco/report.xml
           when: always
 #      - store_artifacts:
 #          path: build/reports/jacoco/test/html
