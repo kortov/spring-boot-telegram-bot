@@ -54,21 +54,21 @@ jobs:
       - run:
           name: Run tests in parallel
           # Use "./gradlew test" instead if tests are not run in parallel
-          command: ./gradlew test $GRADLE_ARGS --info
-      - run:
-          name: Generate code coverage report
-          command:
-            ./gradlew jacocoTestReport
+          command: ./gradlew test $GRADLE_ARGS jacocoTestReport
+#      - run:
+#          name: Generate code coverage report
+#          command:
+#            ./gradlew jacocoTestReport
       - store_test_results:
-          path: build/test-results/test
+          path: build/jacocoHtml
       - codecov/upload:
-          file: ${CIRCLE_WORKING_DIRECTORY}/build/test-results/test/*.xml
+          file: ${CIRCLE_WORKING_DIRECTORY}/build/jacocoHtml/*
       - store_artifacts:
-          path: build/test-results/test
+          path: build/jacocoHtml
           when: always
-      - store_artifacts:
-          path: build/reports/jacoco/test/html
-          when: always
+#      - store_artifacts:
+#          path: build/reports/jacoco/test/html
+#          when: always
       - run:
           name: Assemble JAR
           command: |
