@@ -62,7 +62,7 @@ jobs:
       - store_test_results:
           path: build/test-results/test
       - codecov/upload:
-          file: ${CIRCLE_WORKING_DIRECTORY}/build/test-results/test
+          file: ${CIRCLE_WORKING_DIRECTORY}/build/test-results/test/*.xml
       - store_artifacts:
           path: build/test-results/test
           when: always
