@@ -21,6 +21,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven(url="https://jcenter.bintray.com")
 }
 
 dependencies {
@@ -36,6 +37,7 @@ dependencies {
     implementation("org.telegram:telegrambots:4.4.0.1")
     implementation("org.telegram:telegrambots-abilities:4.4.0.1")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("com.beust:klaxon:5.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")

@@ -1,6 +1,5 @@
 package com.kortov.bootigram.bots
 
-import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.RelaxedMockK
