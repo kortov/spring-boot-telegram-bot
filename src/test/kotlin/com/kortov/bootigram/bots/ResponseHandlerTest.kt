@@ -17,7 +17,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException
 
 @ExtendWith(MockKExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest
 class ResponseHandlerTest {
 
     @RelaxedMockK

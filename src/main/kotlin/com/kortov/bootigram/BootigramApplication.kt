@@ -9,6 +9,4 @@ class BootigramApplication
 
 fun main(args: Array<String>) {
     runApplication<BootigramApplication>(*args)
-//    val parse = JsonParser().parse()
-//    println(parse)
 }
