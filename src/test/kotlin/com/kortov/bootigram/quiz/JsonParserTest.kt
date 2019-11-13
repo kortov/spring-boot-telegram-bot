@@ -5,7 +5,6 @@ import com.kortov.bootigram.quiz.dto.Answer
 import com.kortov.bootigram.quiz.dto.Chapter
 import com.kortov.bootigram.quiz.dto.Exam
 import com.kortov.bootigram.quiz.dto.ExamQuestion
-import io.mockk.every
 import io.mockk.junit5.MockKExtension
 import io.mockk.spyk
 import org.junit.jupiter.api.Assertions
@@ -24,42 +23,13 @@ class JsonParserTest {
 
     @BeforeAll
     fun init() {
-        jsonParser = spyk(JsonParser(Klaxon()))
+        jsonParser = JsonParser(Klaxon())
     }
 
     @Test
-    fun testParse() {
-        val fileName = "fileName"
-        val file = "[\n" +
-                "  {\n" +
-                "    \"name\": \"name\",\n" +
-                "    \"chapters\": [\n" +
-                "      {\n" +
-                "        \"id\": 0,\n" +
-                "        \"name\": \"Chapter 1\",\n" +
-                "        \"examQuestions\": [\n" +
-                "          {\n" +
-                "            \"id\": 0,\n" +
-                "            \"questionText\": \"questionText\",\n" +
-                "            \"explanation\": \"explanation\",\n" +
-                "            \"answers\": [\n" +
-                "              {\n" +
-                "                \"id\": 1,\n" +
-                "                \"textAnswer\": \"textAnswer\"\n" +
-                "              }\n" +
-                "            ],\n" +
-                "            \"correctAnswersIds\": [\n" +
-                "              1\n" +
-                "            ]\n" +
-                "          }\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  }\n" +
-                "]"
-        every { jsonParser invoke "readFileUsingGetResource" withArguments listOf(fileName) } returns file
-
-        val result = jsonParser.parse(fileName)
+    fun testParseFile() {
+        val fileName = "static/quiz_simplest_sample.json"
+        val result = jsonParser.parseFile(fileName)
         val expected = Arrays.asList(Exam(
                 "name", Arrays.asList(
                 Chapter(0, "Chapter 1", Arrays.asList(
@@ -69,4 +39,5 @@ class JsonParserTest {
         Assertions.assertEquals(
                 expected, result)
     }
+
 }

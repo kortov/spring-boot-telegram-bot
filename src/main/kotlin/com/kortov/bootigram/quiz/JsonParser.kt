@@ -17,10 +17,14 @@ class JsonParser(val klaxon: Klaxon) {
         return resource.file.readText(Charsets.UTF_8)
     }
 
-    fun parse(fileName: String): ArrayList<Exam> {
+    fun parseFile(fileName: String): ArrayList<Exam> {
         val file = readFileUsingGetResource(fileName)
+        return parseString(file)
+    }
+
+    fun parseString(string: String): ArrayList<Exam> {
         val exams = arrayListOf<Exam>()
-        JsonReader(StringReader(file)).use { reader ->
+        JsonReader(StringReader(string)).use { reader ->
             reader.beginArray {
                 while (reader.hasNext()) {
                     val product = klaxon.parse<Exam>(reader)
