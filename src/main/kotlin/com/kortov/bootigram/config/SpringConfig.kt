@@ -1,5 +1,6 @@
 package com.kortov.bootigram.config
 
+import com.beust.klaxon.Klaxon
 import com.kortov.bootigram.bots.HelloBot
 import mu.KLogging
 import org.mapdb.DBMaker
@@ -18,7 +19,7 @@ import java.net.PasswordAuthentication
 @Configuration
 @ConditionalOnClass(TelegramBotsApi::class)
 @EnableConfigurationProperties(TelegramProperties::class)
-class TelegramBotConfig(val properties: TelegramProperties) {
+class SpringConfig(val properties: TelegramProperties) {
 
     @Bean(destroyMethod = "close")
     @Throws(TelegramApiRequestException::class)
@@ -56,6 +57,11 @@ class TelegramBotConfig(val properties: TelegramProperties) {
         // Select proxy type: [HTTP|SOCKS4|SOCKS5] (default: NO_PROXY)
         botOptions.proxyType = DefaultBotOptions.ProxyType.SOCKS5
         return botOptions
+    }
+
+    @Bean
+    fun klakson(): Klaxon {
+        return Klaxon()
     }
 
     companion object : KLogging()

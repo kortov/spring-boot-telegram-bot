@@ -1,6 +1,5 @@
 package com.kortov.bootigram.bots
 
-import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.RelaxedMockK
@@ -18,7 +17,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException
 
 @ExtendWith(MockKExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest
 class ResponseHandlerTest {
 
     @RelaxedMockK

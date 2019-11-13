@@ -2,7 +2,6 @@ package com.kortov.bootigram.integration
 
 import com.kortov.bootigram.bots.HelloBot
 import com.kortov.bootigram.bots.HelloController
-import com.kortov.bootigram.config.TelegramBotConfig
 import com.kortov.bootigram.config.TelegramProperties
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -13,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody

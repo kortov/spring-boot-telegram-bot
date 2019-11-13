@@ -1,5 +1,6 @@
 package com.kortov.bootigram
 
+import com.kortov.bootigram.quiz.JsonParser
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 

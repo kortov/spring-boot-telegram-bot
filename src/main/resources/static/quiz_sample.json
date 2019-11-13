@@ -1,0 +1,240 @@
+[
+  {
+    "name": "Test suite 1",
+    "chapters": [
+      {
+        "id": 0,
+        "name": "Chapter 1",
+        "examQuestions": [
+          {
+            "id": 0,
+            "questionText": "Test with several answers",
+            "explanation": "Some explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "Answer 1"
+              },
+              {
+                "id": 2,
+                "textAnswer": "Answer 2"
+              },
+              {
+                "id": 3,
+                "textAnswer": "Answer 3"
+              },
+              {
+                "id": 4,
+                "textAnswer": "Answer 4"
+              },
+              {
+                "id": 5,
+                "textAnswer": "Answer 5"
+              },
+              {
+                "id": 6,
+                "textAnswer": "Answer 6"
+              }
+            ],
+            "correctAnswersIds": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "id": 1,
+            "questionText": "Question with 1 answer",
+            "explanation": "Some explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "Answer 1"
+              },
+              {
+                "id": 2,
+                "textAnswer": "Answer 2"
+              },
+              {
+                "id": 3,
+                "textAnswer": "Answer 3"
+              },
+              {
+                "id": 4,
+                "textAnswer": "Answer 4"
+              },
+              {
+                "id": 5,
+                "textAnswer": "Answer 5"
+              },
+              {
+                "id": 6,
+                "textAnswer": "Answer 6"
+              }
+            ],
+            "correctAnswersIds": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "name": "Chapter 2",
+        "examQuestions": [
+          {
+            "id": 2,
+            "questionText": "Test with several answers",
+            "explanation": "Some explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "Answer 1"
+              },
+              {
+                "id": 2,
+                "textAnswer": "Answer 2"
+              },
+              {
+                "id": 3,
+                "textAnswer": "Answer 3"
+              },
+              {
+                "id": 4,
+                "textAnswer": "Answer 4"
+              },
+              {
+                "id": 5,
+                "textAnswer": "Answer 5"
+              },
+              {
+                "id": 6,
+                "textAnswer": "Answer 6"
+              }
+            ],
+            "correctAnswersIds": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "id": 3,
+            "questionText": "Question with 1 answer",
+            "explanation": "Some explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "Answer 1"
+              },
+              {
+                "id": 2,
+                "textAnswer": "Answer 2"
+              },
+              {
+                "id": 3,
+                "textAnswer": "Answer 3"
+              },
+              {
+                "id": 4,
+                "textAnswer": "Answer 4"
+              },
+              {
+                "id": 5,
+                "textAnswer": "Answer 5"
+              },
+              {
+                "id": 6,
+                "textAnswer": "Answer 6"
+              }
+            ],
+            "correctAnswersIds": [
+              4
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Test suite 2",
+    "chapters": [
+      {
+        "id": 2,
+        "name": "Chapter 3",
+        "examQuestions": [
+          {
+            "id": 4,
+            "questionText": "Test with several answers",
+            "explanation": "Some explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "Answer 1"
+              },
+              {
+                "id": 2,
+                "textAnswer": "Answer 2"
+              },
+              {
+                "id": 3,
+                "textAnswer": "Answer 3"
+              },
+              {
+                "id": 4,
+                "textAnswer": "Answer 4"
+              },
+              {
+                "id": 5,
+                "textAnswer": "Answer 5"
+              },
+              {
+                "id": 6,
+                "textAnswer": "Answer 6"
+              }
+            ],
+            "correctAnswersIds": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "id": 5,
+            "questionText": "Question with 1 answer",
+            "explanation": "Some explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "Answer 1"
+              },
+              {
+                "id": 2,
+                "textAnswer": "Answer 2"
+              },
+              {
+                "id": 3,
+                "textAnswer": "Answer 3"
+              },
+              {
+                "id": 4,
+                "textAnswer": "Answer 4"
+              },
+              {
+                "id": 5,
+                "textAnswer": "Answer 5"
+              },
+              {
+                "id": 6,
+                "textAnswer": "Answer 6"
+              }
+            ],
+            "correctAnswersIds": [
+              4
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];

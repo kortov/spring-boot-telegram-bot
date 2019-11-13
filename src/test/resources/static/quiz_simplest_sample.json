@@ -1,0 +1,27 @@
+[
+  {
+    "name": "name",
+    "chapters": [
+      {
+        "id": 0,
+        "name": "Chapter 1",
+        "examQuestions": [
+          {
+            "id": 0,
+            "questionText": "questionText",
+            "explanation": "explanation",
+            "answers": [
+              {
+                "id": 1,
+                "textAnswer": "textAnswer"
+              }
+            ],
+            "correctAnswersIds": [
+              1
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];

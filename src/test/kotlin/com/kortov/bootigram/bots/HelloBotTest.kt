@@ -1,6 +1,6 @@
 package com.kortov.bootigram.bots
 
-import com.kortov.bootigram.config.TelegramBotConfig
+import com.kortov.bootigram.config.SpringConfig
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
@@ -18,7 +18,7 @@ import org.telegram.telegrambots.meta.api.objects.User
 
 @ExtendWith(MockKExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ContextConfiguration(classes = [TelegramBotConfig::class])
+@ContextConfiguration(classes = [SpringConfig::class])
 @SpringBootTest
 class HelloBotTest {
 
