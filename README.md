@@ -5,7 +5,3 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkortov%2Fspring-boot-telegram-bot.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkortov%2Fspring-boot-telegram-bot?ref=badge_shield)
 
 # Telegram Webhook Bot on Spring Boot and Kotlin
-
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkortov%2Fspring-boot-telegram-bot.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkortov%2Fspring-boot-telegram-bot?ref=badge_large)
