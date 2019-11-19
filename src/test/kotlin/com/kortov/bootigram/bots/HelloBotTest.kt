@@ -42,7 +42,7 @@ class HelloBotTest {
         val endUser = User()
         val context = MessageContext.newContext(update, endUser, CHAT_ID)
         bot.sayHello().action().accept(context)
-        verify { responseHandler.replyToStart(CHAT_ID) }
+        verify { responseHandler.replyToStartAsync(CHAT_ID) }
     }
 
 }
