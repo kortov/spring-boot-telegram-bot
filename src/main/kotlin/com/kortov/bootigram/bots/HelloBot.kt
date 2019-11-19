@@ -47,7 +47,7 @@ open class HelloBot(
                 .input(0)
                 .locality(USER)
                 .privacy(ADMIN)
-                .action { ctx -> responseHandler.replyToStart(ctx.chatId()) }
+                .action { ctx -> responseHandler.replyToStartAsync(ctx.chatId()) }
 //                .post { ctx -> silent.send("Bye world!", ctx.chatId()!!) }
                 .build()
     }
