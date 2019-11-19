@@ -5,6 +5,7 @@ import com.beust.klaxon.Klaxon
 import com.kortov.bootigram.quiz.dto.Exam
 import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.stereotype.Component
+import java.io.File
 import java.io.StringReader
 
 
@@ -20,6 +21,10 @@ class JsonParser(val klaxon: Klaxon) {
     fun parseFile(fileName: String): ArrayList<Exam> {
         val file = readFileUsingGetResource(fileName)
         return parseString(file)
+    }
+
+    fun parseFile(file: File): ArrayList<Exam> {
+        return parseString(file.readText(Charsets.UTF_8))
     }
 
     fun parseString(string: String): ArrayList<Exam> {
