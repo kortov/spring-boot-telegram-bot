@@ -2,8 +2,10 @@ package com.kortov.bootigram.config
 
 import com.beust.klaxon.Klaxon
 import com.kortov.bootigram.bots.HelloBot
+import com.kortov.bootigram.quiz.JsonParser
 import mu.KLogging
 import org.mapdb.DBMaker
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -16,15 +18,19 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
 import java.net.Authenticator
 import java.net.PasswordAuthentication
 
+
 @Configuration
 @ConditionalOnClass(TelegramBotsApi::class)
 @EnableConfigurationProperties(TelegramProperties::class)
 class SpringConfig(val properties: TelegramProperties) {
 
+//    @Autowired
+//    private lateinit var parser: JsonParser
+
     @Bean(destroyMethod = "close")
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(): HelloBot {
-        val helloBot = HelloBot(properties, dbForBot(), botOptions())
+    fun helloBot(parser: JsonParser): HelloBot {
+        val helloBot = HelloBot(properties,parser,  dbForBot(), botOptions())
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
     }
