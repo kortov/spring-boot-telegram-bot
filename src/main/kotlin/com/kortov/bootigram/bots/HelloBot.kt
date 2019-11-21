@@ -10,13 +10,11 @@ import org.telegram.telegrambots.bots.DefaultBotOptions
 import javax.annotation.PostConstruct
 
 open class HelloBot(
-        botToken: String,
-        botUsername: String,
-        botPath: String,
+        private val properties: TelegramProperties,
         dbForBot: DBContext,
-        options: DefaultBotOptions,
-        private val properties: TelegramProperties)
-    : AbilityWebhookBot(botToken, botUsername, botPath, dbForBot, options) {
+        options: DefaultBotOptions
+        )
+    : AbilityWebhookBot(properties.botToken, properties.botUsername, TelegramProperties.WEB_HOOK, dbForBot, options) {
 
     lateinit var responseHandler: ResponseHandler
 
