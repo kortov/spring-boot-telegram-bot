@@ -1,5 +1,6 @@
 package com.kortov.bootigram.bots
 
+import com.kortov.bootigram.bots.handlers.ResponseHandler
 import com.kortov.bootigram.config.SpringConfig
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
@@ -42,7 +43,7 @@ class HelloBotTest {
         val endUser = User()
         val context = MessageContext.newContext(update, endUser, CHAT_ID)
         bot.sayHello().action().accept(context)
-        verify { responseHandler.replyToStartAsync(CHAT_ID) }
+        verify { responseHandler.sendAsync("Hello", CHAT_ID) }
     }
 
 }

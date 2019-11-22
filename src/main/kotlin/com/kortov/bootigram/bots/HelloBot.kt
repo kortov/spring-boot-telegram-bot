@@ -1,7 +1,7 @@
 package com.kortov.bootigram.bots
 
+import com.kortov.bootigram.bots.handlers.ResponseHandler
 import com.kortov.bootigram.config.TelegramProperties
-import com.kortov.bootigram.quiz.JsonParser
 import org.telegram.abilitybots.api.bot.AbilityWebhookBot
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.objects.Ability
@@ -12,14 +12,11 @@ import javax.annotation.PostConstruct
 
 open class HelloBot(
         private val properties: TelegramProperties,
-        private val parser: JsonParser,
         dbForBot: DBContext,
         options: DefaultBotOptions
-        )
-    : AbilityWebhookBot(properties.botToken, properties.botUsername, TelegramProperties.WEB_HOOK, dbForBot, options) {
+) : AbilityWebhookBot(properties.botToken, properties.botUsername, TelegramProperties.WEB_HOOK, dbForBot, options) {
 
     lateinit var responseHandler: ResponseHandler
-//    lateinit var parser: JsonParser
 
     override fun creatorId(): Int {
         return properties.creatorId
@@ -27,7 +24,7 @@ open class HelloBot(
 
     @PostConstruct
     fun init() {
-        responseHandler = ResponseHandler(sender, parser)
+        responseHandler = ResponseHandler(sender)
     }
 
 //    override fun onWebhookUpdateReceived(update: Update): BotApiMethod<*>? {
@@ -48,7 +45,7 @@ open class HelloBot(
                 .input(0)
                 .locality(USER)
                 .privacy(ADMIN)
-                .action { ctx -> responseHandler.replyToStartAsync(ctx.chatId()) }
+                .action { ctx -> responseHandler.sendAsync("Hello", ctx.chatId()) }
 //                .post { ctx -> silent.send("Bye world!", ctx.chatId()!!) }
                 .build()
     }

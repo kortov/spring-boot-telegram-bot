@@ -5,7 +5,6 @@ import com.kortov.bootigram.bots.HelloBot
 import com.kortov.bootigram.quiz.JsonParser
 import mu.KLogging
 import org.mapdb.DBMaker
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -24,13 +23,10 @@ import java.net.PasswordAuthentication
 @EnableConfigurationProperties(TelegramProperties::class)
 class SpringConfig(val properties: TelegramProperties) {
 
-//    @Autowired
-//    private lateinit var parser: JsonParser
-
     @Bean(destroyMethod = "close")
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(parser: JsonParser): HelloBot {
-        val helloBot = HelloBot(properties,parser,  dbForBot(), botOptions())
+    fun helloBot(): HelloBot {
+        val helloBot = HelloBot(properties, dbForBot(), botOptions())
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
     }
@@ -70,6 +66,5 @@ class SpringConfig(val properties: TelegramProperties) {
     }
 
     companion object : KLogging()
-
 
 }

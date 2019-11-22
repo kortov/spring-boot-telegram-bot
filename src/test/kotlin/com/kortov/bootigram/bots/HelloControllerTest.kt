@@ -1,4 +1,4 @@
-package com.kortov.bootigram.integration
+package com.kortov.bootigram.bots
 
 import com.kortov.bootigram.bots.HelloBot
 import com.kortov.bootigram.bots.HelloController

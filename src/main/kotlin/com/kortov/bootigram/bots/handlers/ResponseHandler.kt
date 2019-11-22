@@ -1,7 +1,5 @@
-package com.kortov.bootigram.bots
+package com.kortov.bootigram.bots.handlers
 
-import com.kortov.bootigram.quiz.JsonParser
-import com.kortov.bootigram.quiz.dto.Exam
 import mu.KLogging
 import org.telegram.abilitybots.api.sender.MessageSender
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
@@ -12,22 +10,16 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
 import org.telegram.telegrambots.meta.updateshandlers.SentCallback
 
 
-class ResponseHandler(private val sender: MessageSender,
-                      parser: JsonParser) {
-    val parsedFile: ArrayList<Exam> = parser.parseFile("static/test_questions.json")
-    val questionText: String
-    init {
-        questionText = parsedFile[0].chapters[0].examQuestions[1].questionText
-    }
+class ResponseHandler(private val sender: MessageSender) {
 
-    fun replyToStartAsync(chatId: Long) {
+    fun sendAsync(message:String, chatId: Long) {
         try {
 //            val parsedFile = parser.parseFile("static/test_questions.json")
 //            val questionText = parsedFile[0].chapters[0].examQuestions[1].questionText
-            logger.info { questionText }
+            logger.info { message }
             sender.executeAsync(SendMessage()
                     .enableHtml(true)
-                    .setText(questionText)
+                    .setText(message)
                     .setChatId(chatId),
                     object : SentCallback<Message> {
                         override fun onResult(method: BotApiMethod<Message>, sentMessage: Message?) {}
