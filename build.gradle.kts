@@ -35,7 +35,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.github.microutils:kotlin-logging:1.5.9")
     implementation("org.telegram:telegrambots:4.4.0.2")
-    implementation("org.telegram:telegrambots-abilities:4.4.0.2")
+    implementation("org.telegram:telegrambots-abilities:4.4.0.2") {
+        exclude(module = "log4j-slf4j-impl")
+    }
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("com.beust:klaxon:5.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
