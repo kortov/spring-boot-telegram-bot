@@ -5,6 +5,7 @@ import com.kortov.bootigram.config.TelegramProperties
 import org.telegram.abilitybots.api.bot.AbilityWebhookBot
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.objects.Ability
+import org.telegram.abilitybots.api.objects.Flag
 import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
 import org.telegram.telegrambots.bots.DefaultBotOptions
@@ -45,27 +46,42 @@ open class HelloBot(
 //    }
 
     fun directionFlow(): ReplyFlow {
-        val saidLeft = Reply.of( Consumer {upd:Update -> silent.send("Sir, I have gone left.", getChatId(upd)!!) },
+        val saidLeft = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have gone left.", getChatId(upd)) },
                 hasMessageWith("go left or else"))
 
         val leftflow = ReplyFlow.builder(db)
-                .action { upd -> silent.send("I don't know how to go left.", getChatId(upd)!!) }
+                .action { upd -> silent.send("I don't know how to go left.", getChatId(upd)) }
                 .onlyIf(hasMessageWith("left"))
                 .next(saidLeft).build()
 
-        val saidRight = Reply.of(Consumer {upd:Update -> silent.send("Sir, I have gone right.", getChatId(upd)!!) },
+        val saidRight = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have gone right.", getChatId(upd)) },
                 hasMessageWith("right"))
 
         return ReplyFlow.builder(db)
-                .action { upd -> silent.send("Command me to go left or right!", getChatId(upd)!!) }
+                .action { upd -> silent.send("Command me to go left or right!", getChatId(upd)) }
                 .onlyIf(hasMessageWith("wake up"))
                 .next(leftflow)
                 .next(saidRight)
                 .build()
     }
 
+    fun fileFlow(): ReplyFlow {
+        val sentFile = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have a file " + upd.message.document.fileName, getChatId(upd)) },
+                Flag.DOCUMENT)
+
+        return ReplyFlow.builder(db)
+                .action { upd -> silent.send("Send me a file", getChatId(upd)) }
+                .onlyIf(hasMessageWith("get a file"))
+                .next(sentFile)
+                .build()
+    }
+
     private fun hasMessageWith(msg: String): Predicate<Update> {
-        return  Predicate { upd:Update -> upd.getMessage().getText().equals(msg, ignoreCase = true) }
+        return Predicate { upd: Update -> upd.message.text.equals(msg, ignoreCase = true) }
+    }
+
+    private fun hasFile(): Predicate<Update> {
+        return Flag.DOCUMENT
     }
 
     fun sayHello(): Ability {
