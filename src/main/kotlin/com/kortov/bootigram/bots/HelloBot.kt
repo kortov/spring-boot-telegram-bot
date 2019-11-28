@@ -9,6 +9,13 @@ import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import javax.annotation.PostConstruct
+import org.telegram.abilitybots.api.util.AbilityUtils.getChatId
+import org.telegram.abilitybots.api.objects.ReplyFlow
+import org.telegram.abilitybots.api.objects.Reply
+import org.telegram.telegrambots.meta.api.objects.Update
+import java.util.function.Consumer
+import java.util.function.Predicate
+
 
 open class HelloBot(
         private val properties: TelegramProperties,
@@ -36,6 +43,30 @@ open class HelloBot(
 //        }
 //        return null
 //    }
+
+    fun directionFlow(): ReplyFlow {
+        val saidLeft = Reply.of( Consumer {upd:Update -> silent.send("Sir, I have gone left.", getChatId(upd)!!) },
+                hasMessageWith("go left or else"))
+
+        val leftflow = ReplyFlow.builder(db)
+                .action { upd -> silent.send("I don't know how to go left.", getChatId(upd)!!) }
+                .onlyIf(hasMessageWith("left"))
+                .next(saidLeft).build()
+
+        val saidRight = Reply.of(Consumer {upd:Update -> silent.send("Sir, I have gone right.", getChatId(upd)!!) },
+                hasMessageWith("right"))
+
+        return ReplyFlow.builder(db)
+                .action { upd -> silent.send("Command me to go left or right!", getChatId(upd)!!) }
+                .onlyIf(hasMessageWith("wake up"))
+                .next(leftflow)
+                .next(saidRight)
+                .build()
+    }
+
+    private fun hasMessageWith(msg: String): Predicate<Update> {
+        return  Predicate { upd:Update -> upd.getMessage().getText().equals(msg, ignoreCase = true) }
+    }
 
     fun sayHello(): Ability {
         return Ability
