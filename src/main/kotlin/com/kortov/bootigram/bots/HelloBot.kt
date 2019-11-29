@@ -5,17 +5,17 @@ import com.kortov.bootigram.config.TelegramProperties
 import org.telegram.abilitybots.api.bot.AbilityWebhookBot
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.objects.Ability
-import org.telegram.abilitybots.api.objects.Flag
+import org.telegram.abilitybots.api.objects.Flag.*
 import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
-import org.telegram.telegrambots.bots.DefaultBotOptions
-import javax.annotation.PostConstruct
-import org.telegram.abilitybots.api.util.AbilityUtils.getChatId
-import org.telegram.abilitybots.api.objects.ReplyFlow
 import org.telegram.abilitybots.api.objects.Reply
+import org.telegram.abilitybots.api.objects.ReplyFlow
+import org.telegram.abilitybots.api.util.AbilityUtils.getChatId
+import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.objects.Update
 import java.util.function.Consumer
 import java.util.function.Predicate
+import javax.annotation.PostConstruct
 
 
 open class HelloBot(
@@ -65,40 +65,65 @@ open class HelloBot(
                 .build()
     }
 
-    fun fileFlow(): ReplyFlow {
-        val sentFile = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have a file " + upd.message.document.fileName, getChatId(upd)) },
-                Flag.DOCUMENT)
-
-        return ReplyFlow.builder(db)
-                .action { upd -> silent.send("Send me a file", getChatId(upd)) }
-                .onlyIf(hasMessageWith("get a file"))
-                .next(sentFile)
-                .build()
-    }
-
     private fun hasMessageWith(msg: String): Predicate<Update> {
         return Predicate { upd: Update -> upd.message.text.equals(msg, ignoreCase = true) }
     }
 
+    fun fileFlow(): ReplyFlow {
+        val sentFile = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have a file \"" + upd.message.document.fileName +"\"", getChatId(upd)) },
+                DOCUMENT)
+
+        val getFile = ReplyFlow.builder(db)
+                .onlyIf(hasFile())
+                .next(sentFile)
+                .build()
+
+        return ReplyFlow.builder(db)
+                .onlyIf(hasCommand(UPLOAD_QUIZ))
+                .action { upd -> silent.send("Sir, pls send me a file", getChatId(upd)) }
+                .next(getFile)
+                .next(sentFile)
+                .build()
+    }
+
+    private fun hasCommand(msg: String): Predicate<Update> {
+        return MESSAGE.and(TEXT).and({ upd: Update -> upd.message.text.equals("/" + msg) })
+    }
+
     private fun hasFile(): Predicate<Update> {
-        return Flag.DOCUMENT
+        return DOCUMENT
+    }
+
+    fun uploadQuiz(): Ability {
+        return Ability
+                .builder()
+                .name(UPLOAD_QUIZ)
+                .info("Receives a quiz file")
+                .input(0)
+                .locality(USER)
+                .privacy(ADMIN)
+                .action { }
+                .build()
     }
 
     fun sayHello(): Ability {
         return Ability
                 .builder()
                 .name("hello")
-                .info("says hello world!")
+                .info("Says hello world!")
                 .input(0)
                 .locality(USER)
                 .privacy(ADMIN)
                 .action { ctx -> responseHandler.sendAsync("Hello", ctx.chatId()) }
-//                .post { ctx -> silent.send("Bye world!", ctx.chatId()!!) }
                 .build()
     }
 
     fun close() {
         db.close()
+    }
+
+    companion object {
+        const val UPLOAD_QUIZ = "uploadquiz"
     }
 
 }

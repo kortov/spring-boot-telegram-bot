@@ -1,7 +1,7 @@
 package com.kortov.bootigram.bots.handlers
 
-import com.kortov.bootigram.quiz.JsonParser
 import com.kortov.bootigram.quiz.Exam
+import com.kortov.bootigram.quiz.JsonParser
 import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Component
