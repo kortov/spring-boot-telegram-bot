@@ -70,28 +70,7 @@ open class HelloBot(
     }
 
     fun fileFlow(): ReplyFlow {
-        val sentFile = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have a file \"" + upd.message.document.fileName +"\"", getChatId(upd)) },
-                DOCUMENT)
-
-        val getFile = ReplyFlow.builder(db)
-                .onlyIf(hasFile())
-                .next(sentFile)
-                .build()
-
-        return ReplyFlow.builder(db)
-                .onlyIf(hasCommand(UPLOAD_QUIZ))
-                .action { upd -> silent.send("Sir, pls send me a file", getChatId(upd)) }
-                .next(getFile)
-                .next(sentFile)
-                .build()
-    }
-
-    private fun hasCommand(msg: String): Predicate<Update> {
-        return MESSAGE.and(TEXT).and({ upd: Update -> upd.message.text.equals("/" + msg) })
-    }
-
-    private fun hasFile(): Predicate<Update> {
-        return DOCUMENT
+        return HelloService.fileFlow(silent, db)
     }
 
     fun uploadQuiz(): Ability {
@@ -116,10 +95,6 @@ open class HelloBot(
                 .privacy(ADMIN)
                 .action { ctx -> responseHandler.sendAsync("Hello", ctx.chatId()) }
                 .build()
-    }
-
-    fun close() {
-        db.close()
     }
 
     companion object {

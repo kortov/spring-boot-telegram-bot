@@ -2,7 +2,6 @@ package com.kortov.bootigram.config
 
 import com.beust.klaxon.Klaxon
 import com.kortov.bootigram.bots.HelloBot
-import com.kortov.bootigram.quiz.JsonParser
 import mu.KLogging
 import org.mapdb.DBMaker
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -11,9 +10,13 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.db.MapDBContext
+import org.telegram.abilitybots.api.sender.DefaultSender
+import org.telegram.abilitybots.api.sender.MessageSender
+import org.telegram.telegrambots.bots.DefaultAbsSender
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
+import org.telegram.telegrambots.meta.generics.WebhookBot
 import java.net.Authenticator
 import java.net.PasswordAuthentication
 
@@ -23,9 +26,9 @@ import java.net.PasswordAuthentication
 @EnableConfigurationProperties(TelegramProperties::class)
 class SpringConfig(val properties: TelegramProperties) {
 
-    @Bean(destroyMethod = "close")
+    @Bean
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(): HelloBot {
+    fun helloBot(): WebhookBot {
         val helloBot = HelloBot(properties, dbForBot(), botOptions())
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
@@ -43,6 +46,11 @@ class SpringConfig(val properties: TelegramProperties) {
                 .make()
 
         return MapDBContext(db)
+    }
+
+    @Bean
+    fun sender(): MessageSender {
+        return DefaultSender(helloBot() as DefaultAbsSender)
     }
 
     @Bean

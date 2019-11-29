@@ -1,6 +1,7 @@
 package com.kortov.bootigram.bots.handlers
 
 import mu.KLogging
+import org.springframework.stereotype.Component
 import org.telegram.abilitybots.api.sender.MessageSender
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -9,7 +10,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
 import org.telegram.telegrambots.meta.updateshandlers.SentCallback
 
-
+@Component
 class ResponseHandler(private val sender: MessageSender) {
 
     fun sendAsync(message:String, chatId: Long) {
