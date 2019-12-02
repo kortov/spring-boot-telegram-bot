@@ -32,7 +32,7 @@ class HelloService {
         }
 
         private fun hasCommand(msg: String): Predicate<Update> {
-            return Flag.MESSAGE.and(Flag.TEXT).and({ upd: Update -> upd.message.text.equals("/" + msg) })
+            return Flag.MESSAGE.and(Flag.TEXT).and { upd: Update -> upd.message.text == "/$msg" }
         }
 
         private fun hasFile(): Predicate<Update> {

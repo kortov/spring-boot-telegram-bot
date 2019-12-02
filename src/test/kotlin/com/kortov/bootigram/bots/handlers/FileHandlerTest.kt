@@ -24,12 +24,12 @@ class FileHandlerTest {
 
     @Test
     fun testGetQuiz() {
-        every { parser.parse(any<String>()) } returns Arrays.asList(Exam(
-                "name", Arrays.asList(
-                Chapter(0, "Chapter 1", Arrays.asList(
+        every { parser.parse(any<String>()) } returns listOf(Exam(
+                "name", listOf(
+                Chapter(0, "Chapter 1", listOf(
                         ExamQuestion(0, "questionText", "explanation",
-                                Arrays.asList(Answer(1, "textAnswer")),
-                                Arrays.asList(1)))))))
+                                listOf(Answer(1, "textAnswer")),
+                                listOf(1)))))))
         val fileName = "static/quiz_simplest_sample.json"
         fileHandler.getQuiz(fileName)
         verify {

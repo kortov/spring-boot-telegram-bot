@@ -68,14 +68,14 @@ class SpringConfig(val properties: TelegramProperties) {
                         return PasswordAuthentication(properties.proxyUser, properties.proxyPassword?.toCharArray())
                     }
                 }
-                return null;
+                return null
             }
         })
         return botOptions
     }
 
     @Bean
-    fun klakson(): Klaxon {
+    fun klaxon(): Klaxon {
         return Klaxon()
     }
 

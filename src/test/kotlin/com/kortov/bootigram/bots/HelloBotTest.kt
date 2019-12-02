@@ -29,7 +29,7 @@ class HelloBotTest {
     @Autowired
     lateinit var bot: HelloBot
 
-    val CHAT_ID = 1337L
+    val chatId = 1337L
 
     @BeforeAll
     fun setUp() {
@@ -41,9 +41,9 @@ class HelloBotTest {
     fun canSayHelloWorld() {
         val update = Update()
         val endUser = User()
-        val context = MessageContext.newContext(update, endUser, CHAT_ID)
+        val context = MessageContext.newContext(update, endUser, chatId)
         bot.sayHello().action().accept(context)
-        verify { responseHandler.sendAsync("Hello", CHAT_ID) }
+        verify { responseHandler.sendAsync("Hello", chatId) }
     }
 
 }

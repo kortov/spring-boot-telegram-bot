@@ -5,7 +5,6 @@ import com.kortov.bootigram.config.TelegramProperties
 import org.telegram.abilitybots.api.bot.AbilityWebhookBot
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.objects.Ability
-import org.telegram.abilitybots.api.objects.Flag.*
 import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
 import org.telegram.abilitybots.api.objects.Reply
@@ -49,7 +48,7 @@ open class HelloBot(
         val saidLeft = Reply.of(Consumer { upd: Update -> silent.send("Sir, I have gone left.", getChatId(upd)) },
                 hasMessageWith("go left or else"))
 
-        val leftflow = ReplyFlow.builder(db)
+        val leftFlow = ReplyFlow.builder(db)
                 .action { upd -> silent.send("I don't know how to go left.", getChatId(upd)) }
                 .onlyIf(hasMessageWith("left"))
                 .next(saidLeft).build()
@@ -60,7 +59,7 @@ open class HelloBot(
         return ReplyFlow.builder(db)
                 .action { upd -> silent.send("Command me to go left or right!", getChatId(upd)) }
                 .onlyIf(hasMessageWith("wake up"))
-                .next(leftflow)
+                .next(leftFlow)
                 .next(saidRight)
                 .build()
     }

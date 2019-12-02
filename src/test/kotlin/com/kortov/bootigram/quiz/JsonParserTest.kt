@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JsonParserTest {
 
-    lateinit var jsonParser: JsonParser
+    private lateinit var jsonParser: JsonParser
 
     @BeforeAll
     fun init() {
