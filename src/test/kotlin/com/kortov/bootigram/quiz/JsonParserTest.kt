@@ -1,25 +1,20 @@
 package com.kortov.bootigram.quiz
 
 import com.beust.klaxon.Klaxon
-import com.kortov.bootigram.quiz.dto.Answer
-import com.kortov.bootigram.quiz.dto.Chapter
-import com.kortov.bootigram.quiz.dto.Exam
-import com.kortov.bootigram.quiz.dto.ExamQuestion
-import io.mockk.junit5.MockKExtension
-import io.mockk.spyk
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
-import java.util.*
+import org.springframework.core.io.DefaultResourceLoader
+import org.springframework.test.context.junit.jupiter.SpringExtension
 
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(SpringExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JsonParserTest {
 
-    lateinit var jsonParser: JsonParser
+    private lateinit var jsonParser: JsonParser
 
     @BeforeAll
     fun init() {
@@ -29,13 +24,22 @@ class JsonParserTest {
     @Test
     fun testParseFile() {
         val fileName = "static/quiz_simplest_sample.json"
-        val result = jsonParser.parseFile(fileName)
-        val expected = Arrays.asList(Exam(
-                "name", Arrays.asList(
-                Chapter(0, "Chapter 1", Arrays.asList(
-                        ExamQuestion(0, "questionText", "explanation",
-                                Arrays.asList(Answer(1, "textAnswer")),
-                                Arrays.asList(1)))))))
+        val string = DefaultResourceLoader().getResource(fileName).file.readText(Charsets.UTF_8)
+        val result = jsonParser.parse(string)
+        val expected = listOf(Exam("name",
+                listOf(Chapter(0, "Chapter 1",
+                        listOf(ExamQuestion(0, "questionText", "explanation",
+                                listOf(Answer(1, "textAnswer")),
+                                listOf(1)))))))
+        Assertions.assertEquals(
+                expected, result)
+    }
+
+    @Test
+    fun testParseEmptyString() {
+        val string = ""
+        val result = jsonParser.parse(string)
+        val expected = emptyList<Exam>()
         Assertions.assertEquals(
                 expected, result)
     }

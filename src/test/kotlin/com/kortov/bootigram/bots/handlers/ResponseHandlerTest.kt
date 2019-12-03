@@ -1,4 +1,4 @@
-package com.kortov.bootigram.bots
+package com.kortov.bootigram.bots.handlers
 
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -24,15 +24,17 @@ class ResponseHandlerTest {
 
     @InjectMockKs
     lateinit var responseHandler: ResponseHandler
-    val CHAT_ID = 1337L
+    private val chatId = 1337L
 
     @Test
     fun canReply() {
-        responseHandler.replyToStartAsync(CHAT_ID)
+        val message = "Hello world!"
+        responseHandler.sendAsync(message, chatId)
         verify {
             sender.executeAsync<Message, SendMessage, SentCallback<Message>>(SendMessage()
-                    .setText("Hello world!")
-                    .setChatId(CHAT_ID), any())
+                    .enableHtml(true)
+                    .setText(message)
+                    .setChatId(chatId), any())
         }
     }
 
@@ -40,7 +42,7 @@ class ResponseHandlerTest {
     fun canHandleTelegramApiException() {
         val exception = mockk<TelegramApiException>(relaxed = true)
         every { sender.executeAsync<Message, SendMessage, SentCallback<Message>>(any(), any()) } throws exception
-        responseHandler.replyToStartAsync(CHAT_ID)
+        responseHandler.sendAsync("Hello", chatId)
         verify { exception.printStackTrace() }
     }
 }

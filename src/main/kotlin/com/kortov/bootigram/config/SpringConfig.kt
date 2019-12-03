@@ -10,20 +10,25 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.db.MapDBContext
+import org.telegram.abilitybots.api.sender.DefaultSender
+import org.telegram.abilitybots.api.sender.MessageSender
+import org.telegram.telegrambots.bots.DefaultAbsSender
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
+import org.telegram.telegrambots.meta.generics.WebhookBot
 import java.net.Authenticator
 import java.net.PasswordAuthentication
+
 
 @Configuration
 @ConditionalOnClass(TelegramBotsApi::class)
 @EnableConfigurationProperties(TelegramProperties::class)
 class SpringConfig(val properties: TelegramProperties) {
 
-    @Bean(destroyMethod = "close")
+    @Bean
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(): HelloBot {
+    fun helloBot(): WebhookBot {
         val helloBot = HelloBot(properties, dbForBot(), botOptions())
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
@@ -44,26 +49,36 @@ class SpringConfig(val properties: TelegramProperties) {
     }
 
     @Bean
+    fun sender(): MessageSender {
+        return DefaultSender(helloBot() as DefaultAbsSender)
+    }
+
+    @Bean
     fun botOptions(): DefaultBotOptions {
         val botOptions = DefaultBotOptions()
-        Authenticator.setDefault(object : Authenticator() {
-            override fun getPasswordAuthentication(): PasswordAuthentication {
-                return PasswordAuthentication(properties.proxyUser, properties.proxyPassword?.toCharArray())
-            }
-        })
         botOptions.proxyHost = properties.proxyHost
         botOptions.proxyPort = properties.proxyPort ?: -1
         // Select proxy type: [HTTP|SOCKS4|SOCKS5] (default: NO_PROXY)
         botOptions.proxyType = DefaultBotOptions.ProxyType.SOCKS5
+
+        Authenticator.setDefault(object : Authenticator() {
+            override fun getPasswordAuthentication(): PasswordAuthentication? {
+                if (requestingHost.equals(botOptions.proxyHost, ignoreCase = true)) {
+                    if (botOptions.proxyPort == requestingPort) {
+                        return PasswordAuthentication(properties.proxyUser, properties.proxyPassword?.toCharArray())
+                    }
+                }
+                return null
+            }
+        })
         return botOptions
     }
 
     @Bean
-    fun klakson(): Klaxon {
+    fun klaxon(): Klaxon {
         return Klaxon()
     }
 
     companion object : KLogging()
-
 
 }

@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import org.telegram.telegrambots.meta.api.objects.Update
+import org.telegram.telegrambots.meta.generics.WebhookBot
 
 @RestController("/")
-class HelloController(val helloBot: HelloBot) {
+class HelloController(val helloBot: WebhookBot) {
 
     @PostMapping(TelegramProperties.WEB_HOOK)
     fun index(@RequestBody update: Update) {

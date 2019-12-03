@@ -1,4 +1,4 @@
-package com.kortov.bootigram.quiz.dto
+package com.kortov.bootigram.quiz
 
 data class Exam (val name: String, val chapters:List<Chapter>)
 data class Chapter(val id:Int, val name:String, val examQuestions: List<ExamQuestion>)

@@ -11,7 +11,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 @EnableWebFluxSecurity
 class WebSecurityConfig {
     @Bean
-    fun securitygWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
+    fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http.authorizeExchange()
                 .pathMatchers("/", TelegramProperties.WEB_HOOK, "/foo")
                 .permitAll()
