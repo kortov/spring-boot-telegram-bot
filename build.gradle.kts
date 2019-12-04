@@ -1,3 +1,4 @@
+import info.solidsoft.gradle.pitest.PitestPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
     jacoco
+    id("info.solidsoft.pitest") version "1.4.0"
 }
 
 group = "com.kortov"
@@ -16,6 +18,13 @@ val developmentOnly by configurations.creating
 configurations {
     runtimeClasspath {
         extendsFrom(developmentOnly)
+    }
+}
+
+buildscript {
+    configurations.maybeCreate("pitest")
+    dependencies {
+        "pitest"("org.pitest:pitest-junit5-plugin:0.9")
     }
 }
 
@@ -68,5 +77,16 @@ tasks.jacocoTestReport {
         xml.destination = file("${buildDir}/reports/jacoco/report.xml")
         html.isEnabled = false
         csv.isEnabled = false
+    }
+}
+
+plugins.withId("info.solidsoft.pitest") {
+    configure<PitestPluginExtension> {
+        testPlugin = "junit5"
+        avoidCallsTo = setOf("kotlin.jvm.internal")
+        mutationThreshold = 60
+        pitestVersion = "1.4.9"
+        threads = System.getenv("PITEST_THREADS")?.toInt() ?: Runtime.getRuntime().availableProcessors()
+        outputFormats = setOf("XML", "HTML")
     }
 }

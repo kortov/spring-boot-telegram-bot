@@ -51,7 +51,7 @@ jobs:
           at: .
       - run:
           name: Run tests
-          command: ./gradlew test $GRADLE_ARGS jacocoTestReport
+          command: ./gradlew test $GRADLE_ARGS pitest jacocoTestReport
       - store_test_results:
           path: build/reports/jacoco/report.xml
       - codecov/upload:

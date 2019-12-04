@@ -4,5 +4,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kortov/spring-boot-telegram-bot/badge)](https://www.codefactor.io/repository/github/kortov/spring-boot-telegram-bot)
 [![Maintainability](https://api.codeclimate.com/v1/badges/437ecb00bba89dd1f3b3/maintainability)](https://codeclimate.com/github/kortov/spring-boot-telegram-bot/maintainability)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkortov%2Fspring-boot-telegram-bot.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkortov%2Fspring-boot-telegram-bot?ref=badge_shield)
+[![Mutation tested with PIT](https://img.shields.io/badge/-Mutation%20tested%20with%20PIT-blue.svg)](http://pitest.org/)
+[![codebeat badge](https://codebeat.co/badges/c0311e37-b331-41ec-8858-9d614a9692f5)](https://codebeat.co/projects/github-com-kortov-spring-boot-telegram-bot-master)
 
 # Telegram Webhook Bot on Spring Boot and Kotlin
