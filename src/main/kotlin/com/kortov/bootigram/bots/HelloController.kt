@@ -37,7 +37,7 @@ class HelloController(val helloBot: WebhookBot, val fileHandler: FileHandler, va
             it.examQuestions.forEach {
                 eq -> run {
                 val unescapeHtml4 = StringEscapeUtils.unescapeHtml4(eq.questionText)
-                val withNewLines = unescapeHtml4.replace("<br>", "/n")
+                val withNewLines = unescapeHtml4.replace("<br>", "\n")
                 val unescaped = StringEscapeUtils.unescapeHtml4(withNewLines)
 //                val some = Jsoup.parse(eq.questionText).text()
 //                val some1 = Parser.unescapeEntities(eq.questionText, true)
@@ -51,14 +51,14 @@ class HelloController(val helloBot: WebhookBot, val fileHandler: FileHandler, va
                 eq.questionText = unescaped
 
                 val unescapeHtml41 = StringEscapeUtils.unescapeHtml4(eq.explanation)
-                val withNewLines1 = unescapeHtml41.replace("<br>", "/n")
+                val withNewLines1 = unescapeHtml41.replace("<br>", "\n")
                 val unescaped1 = StringEscapeUtils.unescapeHtml4(withNewLines1)
                 eq.explanation = unescaped1
 
                 eq.answers.forEach{
                     an -> run {
                     val unescapeHtml42 = StringEscapeUtils.unescapeHtml4(an.textAnswer)
-                    val withNewLines2 = unescapeHtml42.replace("<br>", "/n")
+                    val withNewLines2 = unescapeHtml42.replace("<br>", "\n")
                     val unescaped2 = StringEscapeUtils.unescapeHtml4(withNewLines2)
                     an.textAnswer = unescaped2
                 }
