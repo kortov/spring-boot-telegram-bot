@@ -51,6 +51,8 @@ dependencies {
     implementation("org.telegram:telegrambots-abilities:4.4.0.2") {
         exclude(module = "log4j-slf4j-impl")
     }
+    implementation ( "org.apache.commons:commons-text:1.8")
+    implementation ("org.jsoup:jsoup:1.12.1")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("com.beust:klaxon:5.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
