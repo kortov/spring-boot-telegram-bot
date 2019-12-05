@@ -3,7 +3,6 @@ package com.kortov.bootigram.config
 import org.hibernate.validator.constraints.URL
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
-import org.springframework.util.StringUtils
 import org.springframework.validation.annotation.Validated
 
 @ConstructorBinding
@@ -23,17 +22,6 @@ data class TelegramProperties
  val botToken: String,
  val botUsername: String
 ) {
-    fun hasKeyStoreWithPath(): Boolean {
-        return hasUrls() && hasKeyStore() && !StringUtils.isEmpty(this.pathToCertificate)
-    }
-
-    fun hasKeyStore(): Boolean {
-        return !StringUtils.isEmpty(this.keyStore) && !StringUtils.isEmpty(this.keyStorePassword)
-    }
-
-    fun hasUrls(): Boolean {
-        return !StringUtils.isEmpty(this.externalUrl) && !StringUtils.isEmpty(this.internalUrl)
-    }
 
     companion object {
         const val WEB_HOOK = "/bothook"

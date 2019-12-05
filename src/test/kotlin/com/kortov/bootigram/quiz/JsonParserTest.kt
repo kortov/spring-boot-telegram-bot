@@ -17,15 +17,15 @@ class JsonParserTest {
     private lateinit var jsonParser: JsonParser
 
     @BeforeAll
-    fun init() {
+    internal fun init() {
         jsonParser = JsonParser(Klaxon())
     }
 
     @Test
-    fun testParseFile() {
+    internal fun testParseString() {
         val fileName = "static/quiz_simplest_sample.json"
-        val string = DefaultResourceLoader().getResource(fileName).file.readText(Charsets.UTF_8)
-        val result = jsonParser.parse(string)
+        val file = DefaultResourceLoader().getResource(fileName).file
+        val result = jsonParser.parse(file)
         val expected = listOf(Exam("name",
                 listOf(Chapter(0, "Chapter 1",
                         listOf(ExamQuestion(0, "questionText", "explanation",
@@ -36,12 +36,11 @@ class JsonParserTest {
     }
 
     @Test
-    fun testParseEmptyString() {
+    internal fun testParseEmptyString() {
         val string = ""
         val result = jsonParser.parse(string)
         val expected = emptyList<Exam>()
         Assertions.assertEquals(
                 expected, result)
     }
-
 }
