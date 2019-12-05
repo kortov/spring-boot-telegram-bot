@@ -28,7 +28,7 @@ class SpringConfig(val properties: TelegramProperties) {
 
     @Bean
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(): WebhookBot {
+    fun helloBot(): HelloBot {
         val helloBot = HelloBot(properties, dbForBot(), botOptions())
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
