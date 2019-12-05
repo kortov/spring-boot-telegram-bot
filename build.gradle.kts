@@ -25,12 +25,16 @@ buildscript {
     configurations.maybeCreate("pitest")
     dependencies {
         "pitest"("org.pitest:pitest-junit5-plugin:0.9")
+        "pitest"("org.pitest:pitest-kotlin-plugin:1.0")
+    }
+    repositories {
+        maven(url = "https://dl.bintray.com/vantuz/pitest-kotlin")
     }
 }
 
 repositories {
     mavenCentral()
-    maven(url="https://jcenter.bintray.com")
+    maven(url = "https://jcenter.bintray.com")
 }
 
 dependencies {
