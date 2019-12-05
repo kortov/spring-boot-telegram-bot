@@ -1,5 +1,6 @@
 package com.kortov.bootigram.bots
 
+import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kortov.bootigram.config.TelegramProperties
 import org.junit.jupiter.api.Test
@@ -47,12 +48,9 @@ class HelloControllerTest {
                 .andExpect(status().isOk)
     }
 
+    @Throws(JsonProcessingException::class)
     private fun asJsonString(obj: Any?): String? {
-        return try {
-            val mapper = ObjectMapper()
-            mapper.writeValueAsString(obj)
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+        val mapper = ObjectMapper()
+        return mapper.writeValueAsString(obj)
     }
 }
