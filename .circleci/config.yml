@@ -30,6 +30,16 @@ jobs:
           root: .
           paths:
             - build
+
+  sonar:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+    steps:
+      - checkout
+      - run:
+          name: Analyze on SonarCloud
+          command: gradle build sonarqube"
+
   test:
     environment:
       # Configure the JVM and Gradle to avoid OOM errors
@@ -75,6 +85,8 @@ workflows:
   workflow:
     jobs:
       - build
+      - sonar:
+          context: SonarCloud
       - test:
           requires:
             - build
