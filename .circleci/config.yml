@@ -38,7 +38,7 @@ jobs:
       - checkout
       - run:
           name: Analyze on SonarCloud
-          command: gradle build sonarqube"
+          command: gradle build sonarqube
 
   test:
     environment:
