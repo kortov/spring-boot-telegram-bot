@@ -8,6 +8,7 @@ plugins {
     kotlin("plugin.spring") version "1.3.50"
     jacoco
     id("info.solidsoft.pitest") version "1.4.0"
+    id ("org.sonarqube") version "2.8"
 }
 
 group = "com.kortov"
@@ -92,5 +93,13 @@ plugins.withId("info.solidsoft.pitest") {
         pitestVersion = "1.4.9"
         threads = System.getenv("PITEST_THREADS")?.toInt() ?: Runtime.getRuntime().availableProcessors()
         outputFormats = setOf("XML", "HTML")
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "kortov_spring-boot-telegram-bot")
+        property("sonar.organization", "kortov")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
