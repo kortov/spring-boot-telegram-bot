@@ -32,6 +32,15 @@ jobs:
             - build
 
   sonar:
+    environment:
+      TELEGRAM_EXTERNALURL: ${CIRCLE_BUILD_URL}
+      TELEGRAM_CREATORID: ${CREATOR_ID}
+      TELEGRAM_PROXYHOST: ${PROXY_HOST}
+      TELEGRAM_PROXYPORT: ${PROXY_PORT}
+      TELEGRAM_PROXYUSER: ${PROXY_USER}
+      TELEGRAM_PROXYPASSWORD: ${PROXY_PASSWORD}
+      TELEGRAM_BOTTOKEN: ${BOT_TOKEN}
+      TELEGRAM_BOTUSERNAME: ${BOT_USERNAME}
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
     steps:
