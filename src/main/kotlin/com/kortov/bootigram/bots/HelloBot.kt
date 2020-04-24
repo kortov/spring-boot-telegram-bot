@@ -8,8 +8,8 @@ import org.telegram.abilitybots.api.objects.Ability
 import org.telegram.abilitybots.api.objects.Locality.USER
 import org.telegram.abilitybots.api.objects.Privacy.ADMIN
 import org.telegram.abilitybots.api.objects.ReplyFlow
+import org.telegram.abilitybots.api.sender.MessageSender
 import org.telegram.telegrambots.bots.DefaultBotOptions
-import javax.annotation.PostConstruct
 
 
 open class HelloBot(
@@ -24,9 +24,8 @@ open class HelloBot(
         return properties.creatorId
     }
 
-    @PostConstruct
-    fun init() {
-        responseHandler = ResponseHandler(sender)
+    fun sender() : MessageSender {
+        return this.sender;
     }
 
 //    override fun onWebhookUpdateReceived(update: Update): BotApiMethod<*>? {

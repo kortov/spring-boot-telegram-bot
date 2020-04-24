@@ -10,13 +10,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.telegram.abilitybots.api.db.DBContext
 import org.telegram.abilitybots.api.db.MapDBContext
-import org.telegram.abilitybots.api.sender.DefaultSender
 import org.telegram.abilitybots.api.sender.MessageSender
-import org.telegram.telegrambots.bots.DefaultAbsSender
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException
-import org.telegram.telegrambots.meta.generics.WebhookBot
 import java.net.Authenticator
 import java.net.PasswordAuthentication
 
@@ -50,7 +47,7 @@ class SpringConfig(val properties: TelegramProperties) {
 
     @Bean
     fun sender(): MessageSender {
-        return DefaultSender(helloBot() as DefaultAbsSender)
+        return helloBot().sender()
     }
 
     @Bean

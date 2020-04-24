@@ -2,7 +2,7 @@ import info.solidsoft.gradle.pitest.PitestPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.2.0.RELEASE"
+    id("org.springframework.boot") version "2.2.6.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
@@ -47,10 +47,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.github.microutils:kotlin-logging:1.5.9")
-    implementation("org.telegram:telegrambots:4.4.0.2")
-    implementation("org.telegram:telegrambots-abilities:4.4.0.2") {
-        exclude(module = "log4j-slf4j-impl")
-    }
+    implementation("org.telegram:telegrambots:4.7")
+    implementation("org.telegram:telegrambots-abilities:4.7")
     implementation ( "org.apache.commons:commons-text:1.8")
     implementation ("org.jsoup:jsoup:1.12.1")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
