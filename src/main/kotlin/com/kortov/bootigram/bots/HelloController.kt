@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.generics.WebhookBot
 
+
 @RestController("/")
 class HelloController(val helloBot: WebhookBot) {
 
