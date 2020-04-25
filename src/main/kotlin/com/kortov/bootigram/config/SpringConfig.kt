@@ -53,21 +53,27 @@ class SpringConfig(val properties: TelegramProperties) {
     @Bean
     fun botOptions(): DefaultBotOptions {
         val botOptions = DefaultBotOptions()
-        botOptions.proxyHost = properties.proxyHost
-        botOptions.proxyPort = properties.proxyPort ?: -1
-        // Select proxy type: [HTTP|SOCKS4|SOCKS5] (default: NO_PROXY)
-        botOptions.proxyType = DefaultBotOptions.ProxyType.SOCKS5
-
-        Authenticator.setDefault(object : Authenticator() {
-            override fun getPasswordAuthentication(): PasswordAuthentication? {
-                if (requestingHost.equals(botOptions.proxyHost, ignoreCase = true)) {
-                    if (botOptions.proxyPort == requestingPort) {
-                        return PasswordAuthentication(properties.proxyUser, properties.proxyPassword?.toCharArray())
-                    }
-                }
-                return null
+        properties.proxyHost?.let {
+            botOptions.proxyHost = it
+            properties.proxyPort?.let { port ->
+                botOptions.proxyPort = port
             }
-        })
+            botOptions.proxyType = properties.proxyType
+            when (properties.proxyType) {
+                DefaultBotOptions.ProxyType.SOCKS5 -> {Authenticator.setDefault(object : Authenticator() {
+                    override fun getPasswordAuthentication(): PasswordAuthentication? {
+                        if (requestingHost.equals(botOptions.proxyHost, ignoreCase = true)) {
+                            if (botOptions.proxyPort == requestingPort) {
+                                return PasswordAuthentication(properties.proxyUser, properties.proxyPassword?.toCharArray())
+                            }
+                        }
+                        return null
+                    }
+                })}
+                else -> {}
+            }
+
+        }
         return botOptions
     }
 

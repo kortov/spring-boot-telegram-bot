@@ -31,6 +31,10 @@
     {
       "name": "telegram.botUsername",
       "type": "java.lang.String"
+    },
+    {
+      "name": "telegram.proxyType",
+      "type": "DefaultBotOptions.ProxyType"
     }
   ]
 }

@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.URL
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.validation.annotation.Validated
+import org.telegram.telegrambots.bots.DefaultBotOptions
 
 @ConstructorBinding
 @ConfigurationProperties("telegram")
@@ -20,7 +21,8 @@ data class TelegramProperties
  var proxyUser: String?,
  var proxyPassword: String?,
  val botToken: String,
- val botUsername: String
+ val botUsername: String,
+ val proxyType: DefaultBotOptions.ProxyType
 ) {
 
     companion object {

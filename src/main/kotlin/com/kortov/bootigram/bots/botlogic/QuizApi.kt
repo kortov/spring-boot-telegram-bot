@@ -18,13 +18,17 @@ class QuizApi {
         fun sendQuizFlow(bot: Bot, silent: SilentSender, db: DBContext): ReplyFlow {
 
             val sendQuiz = Reply.of(Consumer { upd: Update ->
-                bot.sendApi(SendPoll(AbilityUtils.getChatId(upd), "question", Arrays.asList("a", "b", "c")))
+                val sendPoll = SendPoll(AbilityUtils.getChatId(upd), "question", Arrays.asList("a", "b", "c"))
+                sendPoll.type = "quiz"
+                sendPoll.correctOptionId = 1
+                sendPoll.explanation = "blabla"
+                bot.sendApi(sendPoll)
             }, Flag.MESSAGE)
 
 
             return ReplyFlow.builder(db)
                     .onlyIf(hasCommand(Bot.UPLOAD_QUIZ))
-                    .action { upd -> silent.send("Sir I have a poll", AbilityUtils.getChatId(upd)) }
+                    .action { upd -> silent.send("Sir I have a quiz", AbilityUtils.getChatId(upd)) }
                     .next(sendQuiz)
                     .build()
         }
