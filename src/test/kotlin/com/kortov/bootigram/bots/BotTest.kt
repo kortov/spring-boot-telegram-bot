@@ -1,5 +1,6 @@
 package com.kortov.bootigram.bots
 
+import com.kortov.bootigram.bots.botlogic.Bot
 import com.kortov.bootigram.bots.handlers.ResponseHandler
 import com.kortov.bootigram.config.TelegramProperties
 import io.mockk.impl.annotations.RelaxedMockK
@@ -20,13 +21,13 @@ import kotlin.test.assertEquals
 @ExtendWith(MockKExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
-class HelloBotTest {
+class BotTest {
 
     @RelaxedMockK
     internal lateinit var responseHandler: ResponseHandler
 
     @Autowired
-    internal lateinit var bot: HelloBot
+    internal lateinit var bot: Bot
     @Autowired
     internal lateinit var properties: TelegramProperties
 

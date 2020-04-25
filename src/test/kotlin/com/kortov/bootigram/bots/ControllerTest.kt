@@ -2,6 +2,7 @@ package com.kortov.bootigram.bots
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.kortov.bootigram.bots.botlogic.Bot
 import com.kortov.bootigram.config.TelegramProperties
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -20,13 +21,13 @@ import org.telegram.telegrambots.meta.api.objects.Update
 
 
 @ExtendWith(SpringExtension::class)
-@WebMvcTest(HelloController::class)
+@WebMvcTest(Controller::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WithMockUser
-class HelloControllerTest {
+class ControllerTest {
 
     @MockBean
-    lateinit var helloBot: HelloBot
+    lateinit var bot: Bot
 
     @Autowired
     lateinit var mvc: MockMvc

@@ -1,7 +1,7 @@
 package com.kortov.bootigram.config
 
 import com.beust.klaxon.Klaxon
-import com.kortov.bootigram.bots.HelloBot
+import com.kortov.bootigram.bots.botlogic.Bot
 import mu.KLogging
 import org.mapdb.DBMaker
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -25,8 +25,8 @@ class SpringConfig(val properties: TelegramProperties) {
 
     @Bean
     @Throws(TelegramApiRequestException::class)
-    fun helloBot(): HelloBot {
-        val helloBot = HelloBot(properties, dbForBot(), botOptions())
+    fun helloBot(): Bot {
+        val helloBot = Bot(properties, dbForBot(), botOptions())
         helloBot.setWebhook(properties.externalUrl + helloBot.botPath, null)
         return helloBot
     }

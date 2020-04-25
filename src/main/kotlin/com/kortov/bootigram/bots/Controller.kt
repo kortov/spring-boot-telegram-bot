@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.generics.WebhookBot
 
 
 @RestController("/")
-class HelloController(val helloBot: WebhookBot) {
+class Controller(val helloBot: WebhookBot) {
 
     @PostMapping(TelegramProperties.WEB_HOOK)
     fun index(@RequestBody update: Update) {
