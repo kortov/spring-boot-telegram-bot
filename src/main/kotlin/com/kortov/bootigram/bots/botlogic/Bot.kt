@@ -49,10 +49,6 @@ open class Bot(
         return QuizApi.sendQuizFlow(this, silent, db)
     }
 
-    fun handleQuizAnswerFlow(): ReplyFlow {
-        return QuizApi.handleQuizAnswerFlow(this, silent, db)
-    }
-
     fun <T : java.io.Serializable> sendApi(method: BotApiMethod<T>) {
         sendApiMethod(method)
     }

@@ -33,13 +33,6 @@ class QuizApi {
                     .build()
         }
 
-        fun handleQuizAnswerFlow(bot: Bot, silent: SilentSender, db: DBContext): ReplyFlow {
-            return ReplyFlow.builder(db)
-                    .onlyIf(hasPollAnswer())
-                    .action { upd -> ResponseHandler.logger.info { upd.poll.options } }
-                    .build()
-        }
-
         private fun hasCommand(msg: String): Predicate<Update> {
             return Flag.MESSAGE.and(Flag.TEXT).and { upd: Update -> upd.message.text == "/$msg" }
         }
